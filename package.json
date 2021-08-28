@@ -23,14 +23,14 @@
   "scripts": {
     "test": "jest",
     "dev": "webpack serve --config config/webpack.dev.js",
-    "start": "webpack serve --config config/webpack.prod.js",
+    "start": "node server.js",
     "build": "NODE_ENV=production webpack --config config/webpack.prod.js",
     "build-staging": "NODE_ENV=production webpack --config config/webpack.stag.js",
     "prettify": "yarn prettier \"**/*.*(js|jsx)\" --ignore-path=.prettierignore --write",
     "lint": "eslint src --ext .js,.jsx && yarn prettify",
     "lint-fix": "eslint src --ext .js,.jsx --fix && yarn prettify",
     "predeploy": "npm run build",
-    "heroku-prebuild": "npm install --dev",
+    "heroku-prebuild": "yarn install --dev",
     "deploy": "gh-pages -d dist"
   },
   "husky": {
@@ -77,6 +77,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "express": "^4.17.1",
     "html-webpack-plugin": "^5.3.2",
     "husky": "^4.3.8",
     "jest": "^26.6.3",
