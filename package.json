@@ -22,7 +22,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "webpack serve --config config/webpack.dev.js",
+    "dev": "webpack serve --config config/webpack.dev.js",
+    "start": "webpack serve --config config/webpack.prod.js",
     "build": "NODE_ENV=production webpack --config config/webpack.prod.js",
     "build-staging": "NODE_ENV=production webpack --config config/webpack.stag.js",
     "prettify": "yarn prettier \"**/*.*(js|jsx)\" --ignore-path=.prettierignore --write",
