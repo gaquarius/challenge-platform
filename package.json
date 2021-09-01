@@ -1,8 +1,5 @@
 {
-  "author": {
-    "name": "Stefan Wüthrich",
-    "url": "https://altafino.com"
-  },
+  "author": "gaquarius",
   "keywords": [
     "react",
     "reactjs",
@@ -11,9 +8,9 @@
     "tailwind"
   ],
   "license": "MIT",
-  "name": "react-webpack-5-tailwind-2",
+  "name": "dash-challenge-platform",
   "version": "1.0.1",
-  "description": "Webpack 5 boilerplate with React 17, Tailwind 2, using babel, sass, with HMR and an optimized production build",
+  "description": "Dash Goal/Challenge Platform",
   "dependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
