@@ -1,15 +1,20 @@
 const paths = require('./paths')
-
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin') // extract css to files
 const tailwindcss = require('tailwindcss')
-const autoprefixer = require('autoprefixer') // help tailwindcss to work
+const autoprefixer = require('autoprefixer')
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin') // help tailwindcss to work
 
 module.exports = {
   // Where webpack looks to start building the bundle
   entry: [paths.src + '/index.js'],
+  resolve: {
+    fallback: {
+      fs: false,
+    },
+  },
 
   // Where webpack outputs the assets and bundles
   output: {
@@ -20,6 +25,7 @@ module.exports = {
 
   // Customize the webpack build process
   plugins: [
+    new NodePolyfillPlugin(),
     // Removes/cleans build folders and unused assets when rebuilding
     new CleanWebpackPlugin(),
 

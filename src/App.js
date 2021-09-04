@@ -1,23 +1,53 @@
-import { Component } from 'react'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { ToastContainer } from 'react-toastify'
+import { createTheme, MuiThemeProvider } from '@material-ui/core'
+import MainLayout from './layout/MainLayout'
+import NavBar from './layout/NavBar'
+import Login from './components/Auth/Login'
+import ProtectedRoute from './components/Auth/ProtectedRoute'
+import Dashboard from './components/Dashboard/Dashboard'
+import SignUp from './components/Auth/SignUp'
+import Routes from './routes'
 
-import './app.styles.scss'
+import 'react-toastify/dist/ReactToastify.css'
 
-class App extends Component {
-  render() {
-    return (
-      <div className='flex items-center justify-center h-screen'>
-        <div className='text-black font-bold rounded-lg border shadow-lg p-10 m-20'>
-          <div>
-            Welcome to Dash Goal/Challenge Platform!
-            <div className={'bg-red-500 text-white'}>
-              process.env.API_URL:{process.env.API_URL} !!! Make sure to put
-              both .env.* files in gitignore.
-            </div>
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#3280f6',
+    },
+  },
+  typography: {
+    fontFamily: ['Poppins', '-apple-system', 'BlinkMacSystemFont'].join(','),
+  },
+})
+
+const queryClient = new QueryClient()
+
+const App = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <MuiThemeProvider theme={theme}>
+        <MainLayout>
+          <NavBar />
+          <div className='flex-1'>
+            <Router>
+              <Switch>
+                <Route path={Routes.Login.path} component={Login} />
+                <Route path={Routes.CreateWallet.path} component={SignUp} />
+                <ProtectedRoute
+                  path={Routes.Dashboard.path}
+                  component={Dashboard}
+                />
+              </Switch>
+            </Router>
           </div>
-        </div>
-      </div>
-    )
-  }
+          <ToastContainer />
+        </MainLayout>
+      </MuiThemeProvider>
+    </QueryClientProvider>
+  )
 }
 
 export default App

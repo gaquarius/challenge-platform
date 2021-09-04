@@ -12,8 +12,17 @@
   "version": "1.0.1",
   "description": "Dash Goal/Challenge Platform",
   "dependencies": {
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
+    "axios": "^0.21.1",
+    "classnames": "^2.3.1",
+    "dash": "^3.20.3",
+    "node-polyfill-webpack-plugin": "^1.1.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-query": "^3.21.1",
+    "react-router-dom": "^5.2.1",
+    "react-toastify": "^8.0.2",
     "tailwindcss": "^2.2.4"
   },
   "main": "index.js",
