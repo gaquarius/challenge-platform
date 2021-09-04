@@ -1,4 +1,5 @@
 const paths = require('./paths')
+const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -7,12 +8,21 @@ const tailwindcss = require('tailwindcss')
 const autoprefixer = require('autoprefixer')
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin') // help tailwindcss to work
 
+const root = path.resolve(__dirname, '../src/')
+
 module.exports = {
   // Where webpack looks to start building the bundle
   entry: [paths.src + '/index.js'],
   resolve: {
     fallback: {
       fs: false,
+    },
+    alias: {
+      components: path.resolve(root, 'components'),
+      layout: path.resolve(root, 'layout'),
+      services: path.resolve(root, 'services'),
+      utils: path.resolve(root, 'utils'),
+      routes: path.resolve(root, 'routes.js'),
     },
   },
 

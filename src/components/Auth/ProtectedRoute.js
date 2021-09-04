@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { Redirect, Route } from 'react-router-dom'
-import { isAuthenticated } from '../../utils'
+import { isAuthenticated } from 'utils'
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   return (

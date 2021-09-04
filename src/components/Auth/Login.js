@@ -7,9 +7,9 @@ import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
-import { login } from '../../services/user'
-import Routes from '../../routes'
-import { isAuthenticated } from '../../utils'
+import { login } from 'services/user'
+import { isAuthenticated } from 'utils'
+import Routes from 'routes'
 
 const useStyles = makeStyles((theme) => ({
   container: {
