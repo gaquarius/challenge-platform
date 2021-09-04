@@ -70,7 +70,7 @@ const Login = () => {
         },
       }
     )
-  }, [identity, password, mutate])
+  }, [identity, password, mutate, history])
   const handleIdentityChange = React.useCallback(({ target: { value } }) => {
     setIdentity(value)
   }, [])
