@@ -8,9 +8,12 @@ import Login from 'components/Auth/Login'
 import ProtectedRoute from 'components/Auth/ProtectedRoute'
 import Dashboard from 'components/Dashboard/Dashboard'
 import SignUp from 'components/Auth/SignUp'
+import Profile from 'components/Profile/Profile'
+import ProfileById from 'components/Profile/ProfileById'
 import Routes from 'routes'
 
 import 'react-toastify/dist/ReactToastify.css'
+import { makeStyles } from '@material-ui/styles'
 
 const theme = createTheme({
   palette: {
@@ -23,28 +26,44 @@ const theme = createTheme({
   },
 })
 
+const useStyles = makeStyles(() => ({
+  content: {
+    flex: 1,
+    padding: theme.spacing(4),
+    backgroundColor: `rgb(241, 242, 244)`,
+  },
+}))
+
 const queryClient = new QueryClient()
 
 const App = () => {
+  const classes = useStyles()
+
   return (
     <QueryClientProvider client={queryClient}>
       <MuiThemeProvider theme={theme}>
-        <MainLayout>
-          <NavBar />
-          <div className='flex-1'>
-            <Router>
+        <Router>
+          <MainLayout>
+            <NavBar />
+            <div className={classes.content}>
               <Switch>
                 <Route path={Routes.Login.path} component={Login} />
                 <Route path={Routes.CreateWallet.path} component={SignUp} />
+                <Route path={Routes.Profile.path} exact component={Profile} />
+                <ProtectedRoute
+                  path={Routes.ProfileById.path}
+                  exact
+                  component={ProfileById}
+                />
                 <ProtectedRoute
                   path={Routes.Dashboard.path}
                   component={Dashboard}
                 />
               </Switch>
-            </Router>
-          </div>
-          <ToastContainer />
-        </MainLayout>
+            </div>
+            <ToastContainer />
+          </MainLayout>
+        </Router>
       </MuiThemeProvider>
     </QueryClientProvider>
   )
