@@ -11,7 +11,6 @@ import Box from '@material-ui/core/Box'
 import { isAuthenticated } from 'utils'
 import { useHistory, useLocation } from 'react-router-dom'
 import { logOut } from 'utils/auth'
-import { Link } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -64,11 +63,11 @@ const NavBar = () => {
           </Typography>
           {auth && (
             <Box display='flex' flexDirection='row' alignItems='center'>
-              <Typography variant='h6' className={classes.title}>
+              {/* <Typography variant='h6' className={classes.title}>
                 <Link href='/challenges' color='textSecondary'>
                   Challenges
                 </Link>
-              </Typography>
+              </Typography> */}
               <IconButton
                 aria-label='account of current user'
                 aria-controls='menu-appbar'
