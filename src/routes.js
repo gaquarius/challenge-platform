@@ -8,6 +8,12 @@ const Routes = {
   Dashboard: {
     path: '/dashboard',
   },
+  Profile: {
+    path: '/profile',
+  },
+  ProfileById: {
+    path: '/profile/:id',
+  },
 }
 
 export default Routes

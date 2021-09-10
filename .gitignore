@@ -5,3 +5,5 @@ stats.json
 package-lock.json
 # jetbrains
 .idea
+# vscode
+.vscode
