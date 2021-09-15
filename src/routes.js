@@ -14,6 +14,9 @@ const Routes = {
   ProfileById: {
     path: '/profile/:id',
   },
+  Challenges: {
+    path: '/challenges',
+  },
 }
 
 export default Routes

@@ -14,6 +14,7 @@ import Routes from 'routes'
 
 import 'react-toastify/dist/ReactToastify.css'
 import { makeStyles } from '@material-ui/styles'
+import ChallengeList from 'components/ChallengeList/ChallengeList'
 
 const theme = createTheme({
   palette: {
@@ -50,6 +51,11 @@ const App = () => {
                 <Route path={Routes.Login.path} component={Login} />
                 <Route path={Routes.CreateWallet.path} component={SignUp} />
                 <Route path={Routes.Profile.path} exact component={Profile} />
+                <Route
+                  path={Routes.Challenges.path}
+                  exact
+                  component={ChallengeList}
+                />
                 <ProtectedRoute
                   path={Routes.ProfileById.path}
                   exact

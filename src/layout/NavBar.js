@@ -19,6 +19,8 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    marginRight: theme.spacing(1),
+    cursor: 'pointer',
   },
 }))
 
@@ -38,21 +40,25 @@ const NavBar = () => {
     setAnchorEl(event.currentTarget)
   }
 
-  const handleClose = () => {
+  const handleClose = React.useCallback(() => {
     setAnchorEl(null)
-  }
+  }, [])
 
   const handleProfile = React.useCallback(() => {
     history.push(`/profile`)
     handleClose()
-  }, [history])
+  }, [handleClose, history])
 
-  const handleLogout = () => {
+  const handleLogout = React.useCallback(() => {
     logOut()
 
     history.push('/login')
     handleClose()
-  }
+  }, [history, handleClose])
+
+  const onChallenges = React.useCallback(() => {
+    history.push('/challenges')
+  }, [history])
 
   return (
     <div className={classes.root}>
@@ -63,11 +69,13 @@ const NavBar = () => {
           </Typography>
           {auth && (
             <Box display='flex' flexDirection='row' alignItems='center'>
-              {/* <Typography variant='h6' className={classes.title}>
-                <Link href='/challenges' color='textSecondary'>
-                  Challenges
-                </Link>
-              </Typography> */}
+              <Typography
+                variant='h6'
+                className={classes.title}
+                onClick={onChallenges}
+              >
+                Challenges
+              </Typography>
               <IconButton
                 aria-label='account of current user'
                 aria-controls='menu-appbar'
