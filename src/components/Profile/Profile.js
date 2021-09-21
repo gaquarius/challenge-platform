@@ -74,62 +74,54 @@ const Profile = () => {
 
   return (
     <Container maxWidth='md' className={styles.container}>
-      <PageWrapper
-        title={'Profile'}
-        content={
-          <Box display='flex' alignItems='center' flexDirection='column'>
-            {loading && <CircularProgress />}
-            {!loading && (
-              <Grid
-                container
-                direction='column'
-                spacing={3}
-                alignItems='center'
-              >
-                <Grid item>
-                  <Avatar className={styles.avatar}>
-                    {getAvatarString(user.username)}
-                  </Avatar>
-                </Grid>
-                <Grid item>
-                  <TextField
-                    className={styles.textInput}
-                    variant='outlined'
-                    label='Username'
-                    value={user.username}
-                    onChange={({ target: { value } }) =>
-                      setUser({ ...user, username: value })
-                    }
-                  />
-                </Grid>
-                <Grid item>
-                  <TextField
-                    className={styles.textInput}
-                    variant='outlined'
-                    label='Bio'
-                    value={user.bio}
-                    onChange={({ target: { value } }) =>
-                      setUser({ ...user, bio: value })
-                    }
-                    multiline
-                    rows={5}
-                  />
-                </Grid>
-                <Grid item>
-                  <Button
-                    color='primary'
-                    variant='contained'
-                    className={styles.button}
-                    onClick={onSave}
-                  >
-                    Save
-                  </Button>
-                </Grid>
+      <PageWrapper title={'Profile'}>
+        <Box display='flex' alignItems='center' flexDirection='column'>
+          {loading && <CircularProgress />}
+          {!loading && (
+            <Grid container direction='column' spacing={3} alignItems='center'>
+              <Grid item>
+                <Avatar className={styles.avatar}>
+                  {getAvatarString(user.username)}
+                </Avatar>
               </Grid>
-            )}
-          </Box>
-        }
-      />
+              <Grid item>
+                <TextField
+                  className={styles.textInput}
+                  variant='outlined'
+                  label='Username'
+                  value={user.username}
+                  onChange={({ target: { value } }) =>
+                    setUser({ ...user, username: value })
+                  }
+                />
+              </Grid>
+              <Grid item>
+                <TextField
+                  className={styles.textInput}
+                  variant='outlined'
+                  label='Bio'
+                  value={user.bio}
+                  onChange={({ target: { value } }) =>
+                    setUser({ ...user, bio: value })
+                  }
+                  multiline
+                  rows={5}
+                />
+              </Grid>
+              <Grid item>
+                <Button
+                  color='primary'
+                  variant='contained'
+                  className={styles.button}
+                  onClick={onSave}
+                >
+                  Save
+                </Button>
+              </Grid>
+            </Grid>
+          )}
+        </Box>
+      </PageWrapper>
     </Container>
   )
 }

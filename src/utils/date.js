@@ -14,3 +14,9 @@ export const utcNow = () => {
   const now = new Date()
   return new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
 }
+
+export const stringDate = (date) => {
+  return `${date.getUTCFullYear()}-${
+    date.getUTCMonth() + 1
+  }-${date.getUTCDate()}`
+}
