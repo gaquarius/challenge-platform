@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function EnhancedTable(props) {
-  const { data, onFilter, users } = props
+  const { data, onFilter, users, onItemClick } = props
 
   const classes = useStyles()
   const [order, setOrder] = React.useState('asc')
@@ -128,6 +128,7 @@ export default function EnhancedTable(props) {
                       role='checkbox'
                       tabIndex={-1}
                       key={`table-data-${index}`}
+                      onClick={() => onItemClick(row._id)}
                     >
                       <TableCell align='center'>{index + 1}</TableCell>
                       <TableCell
@@ -181,4 +182,5 @@ EnhancedTable.propTypes = {
   data: PropTypes.array,
   onFilter: PropTypes.func,
   users: PropTypes.arrayOf(PropTypes.string),
+  onItemClick: PropTypes.func,
 }

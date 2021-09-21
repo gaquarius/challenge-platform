@@ -83,39 +83,36 @@ const Profile = () => {
     <Container maxWidth='md' className={styles.container}>
       <Grid container spacing={2} direction='column'>
         <Grid item>
-          <PageWrapper
-            title={'Profile'}
-            content={
-              <Box display='flex' alignItems='center' flexDirection='column'>
-                {!loadingUser ? (
-                  <Grid
-                    container
-                    direction='column'
-                    spacing={3}
-                    alignItems='center'
-                  >
-                    <Grid item>
-                      <Avatar className={styles.avatar}>
-                        {getAvatarString(user.username)}
-                      </Avatar>
-                    </Grid>
-                    <Grid item>
-                      <Typography variant='h6'>
-                        <strong>{user.username}</strong>
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography align='center' className={styles.bio}>
-                        <i>{user.bio}</i>
-                      </Typography>
-                    </Grid>
+          <PageWrapper title={'Profile'}>
+            <Box display='flex' alignItems='center' flexDirection='column'>
+              {!loadingUser ? (
+                <Grid
+                  container
+                  direction='column'
+                  spacing={3}
+                  alignItems='center'
+                >
+                  <Grid item>
+                    <Avatar className={styles.avatar}>
+                      {getAvatarString(user.username)}
+                    </Avatar>
                   </Grid>
-                ) : (
-                  <CircularProgress />
-                )}
-              </Box>
-            }
-          />
+                  <Grid item>
+                    <Typography variant='h6'>
+                      <strong>{user.username}</strong>
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography align='center' className={styles.bio}>
+                      <i>{user.bio}</i>
+                    </Typography>
+                  </Grid>
+                </Grid>
+              ) : (
+                <CircularProgress />
+              )}
+            </Box>
+          </PageWrapper>
         </Grid>
         <Grid item>
           {!loadingChallenges ? (

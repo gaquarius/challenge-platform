@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const PageWrapper = (props) => {
-  const { title, content } = props
+  const { title } = props
 
   const classes = useStyles()
   return (
@@ -29,7 +29,7 @@ const PageWrapper = (props) => {
           <strong>{title}</strong>
         </Typography>
       </Box>
-      <Box className={classes.content}>{content}</Box>
+      <Box className={classes.content}>{props.children}</Box>
     </Paper>
   )
 }
@@ -37,6 +37,7 @@ const PageWrapper = (props) => {
 PageWrapper.propTypes = {
   title: PropTypes.string,
   content: PropTypes.any,
+  children: PropTypes.element,
 }
 
 export default PageWrapper

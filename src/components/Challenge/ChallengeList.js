@@ -1,12 +1,15 @@
 import React from 'react'
-import { CircularProgress, Container } from '@material-ui/core'
+import { Box, Button, CircularProgress, Container } from '@material-ui/core'
 import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
 import EnhancedTable from 'components/common/EnhancedTable/EnhancedTable'
 import { getChallenges } from 'services/challenge'
 import { utcDate, utcNow } from 'utils/date'
+import { useHistory } from 'react-router'
 
 const ChallengeList = () => {
+  const history = useHistory()
+
   const { mutate: mutateGetChallenges } = useMutation(getChallenges)
   const [loading, setLoading] = React.useState(true)
   const [challenges, setChallenges] = React.useState([])
@@ -51,6 +54,10 @@ const ChallengeList = () => {
     [challenges]
   )
 
+  const handleCreate = React.useCallback(() => {
+    history.push('/challenge/create')
+  }, [history])
+
   const coordinators = React.useMemo(() => {
     const result = []
     challenges.forEach((challenge) => {
@@ -60,16 +67,31 @@ const ChallengeList = () => {
     return result
   }, [challenges])
 
+  const onItemClick = React.useCallback(
+    (id) => {
+      history.push(`/challenge/${id}`)
+    },
+    [history]
+  )
+
   return (
     <Container maxWidth='lg'>
       {loading ? (
         <CircularProgress />
       ) : (
-        <EnhancedTable
-          data={filteredData}
-          onFilter={handleFilter}
-          users={coordinators}
-        />
+        <>
+          <Box display='flex' justifyContent='flex-end' mb={2}>
+            <Button variant='contained' color='primary' onClick={handleCreate}>
+              + Create New Challenge
+            </Button>
+          </Box>
+          <EnhancedTable
+            data={filteredData}
+            onFilter={handleFilter}
+            users={coordinators}
+            onItemClick={onItemClick}
+          />
+        </>
       )}
     </Container>
   )
