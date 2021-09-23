@@ -1,14 +1,38 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useMutation } from 'react-query'
+import { getUser } from 'services/user'
+import { toast } from 'react-toastify'
 
 export const StateContext = React.createContext(null)
 
 export default function AppStateProvider(props) {
-  const [user, setUser] = React.useState(null)
+  const [currentUser, setCurrentUser] = React.useState(null)
+
+  const useFetchUser = () => {
+    const { mutate: mutateGetUser } = useMutation(getUser)
+
+    React.useEffect(() => {
+      if (currentUser) return
+
+      mutateGetUser(
+        {},
+        {
+          onSuccess: ({ data }) => {
+            setCurrentUser(data.data)
+          },
+          onError: () => {
+            toast.error(`Can't get profile data`)
+          },
+        }
+      )
+    }, [mutateGetUser])
+  }
 
   const contextValue = {
-    user,
-    setUser,
+    currentUser,
+    setCurrentUser,
+    useFetchUser,
   }
 
   return (

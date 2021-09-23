@@ -4,16 +4,21 @@ import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
 import EnhancedTable from 'components/common/EnhancedTable/EnhancedTable'
 import { getChallenges } from 'services/challenge'
-import { utcDate, utcNow } from 'utils/date'
 import { useHistory } from 'react-router'
+import { useAppState } from '../../context/stateContext'
+import { convertFromUTC } from 'utils/date'
 
-const ChallengeList = () => {
+export default function ChallengeList() {
   const history = useHistory()
 
   const { mutate: mutateGetChallenges } = useMutation(getChallenges)
   const [loading, setLoading] = React.useState(true)
   const [challenges, setChallenges] = React.useState([])
   const [filteredData, setFilteredData] = React.useState([])
+
+  const { currentUser, useFetchUser } = useAppState()
+
+  useFetchUser()
 
   React.useEffect(() => {
     mutateGetChallenges(
@@ -33,19 +38,25 @@ const ChallengeList = () => {
 
   const handleFilter = React.useCallback(
     (filters) => {
-      const { upcoming, coordinator, startDate } = filters
+      const { upcoming, coordinator, goal, startDate } = filters
+
       const data = challenges.filter((challenge) => {
         let result = true
         // upcoming filter
-        result &= startDate ? utcDate(challenge.start_date) >= startDate : true
+        result &= startDate
+          ? convertFromUTC(challenge.start_date) >= startDate
+          : true
 
         // coordinator filter
         result &= coordinator ? challenge.coordinator === coordinator : true
 
         // goal filter
+        result &= goal && goal !== 'all' ? challenge.goal === goal : true
 
         // upcoming filter
-        result &= upcoming ? utcDate(challenge.start_date) > utcNow() : true
+        result &= upcoming
+          ? convertFromUTC(challenge.start_date) > new Date()
+          : true
 
         return result
       })
@@ -61,15 +72,24 @@ const ChallengeList = () => {
   const coordinators = React.useMemo(() => {
     const result = []
     challenges.forEach((challenge) => {
-      if (result.includes(challenge.coordinator)) return
+      if (!challenge.coordinator || result.includes(challenge.coordinator)) {
+        return
+      }
       result.push(challenge.coordinator)
     })
     return result
   }, [challenges])
 
-  const onItemClick = React.useCallback(
+  const onOpen = React.useCallback(
     (id) => {
       history.push(`/challenge/${id}`)
+    },
+    [history]
+  )
+
+  const onEdit = React.useCallback(
+    (id) => {
+      history.push(`/challenge/${id}/edit`)
     },
     [history]
   )
@@ -89,12 +109,12 @@ const ChallengeList = () => {
             data={filteredData}
             onFilter={handleFilter}
             users={coordinators}
-            onItemClick={onItemClick}
+            currentUser={currentUser}
+            onOpen={onOpen}
+            onEdit={onEdit}
           />
         </>
       )}
     </Container>
   )
 }
-
-export default ChallengeList

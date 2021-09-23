@@ -45,7 +45,7 @@ const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles()
   const [filters, setFilters] = React.useState({
     startDate: new Date(),
-    goal: '',
+    goal: 'all',
     upcoming: false,
     coordinator: '',
   })
@@ -112,6 +112,7 @@ const EnhancedTableToolbar = (props) => {
                       variant='outlined'
                       fullWidth
                     >
+                      <MenuItem value={'all'}>All</MenuItem>
                       <MenuItem value={'count'}>Count</MenuItem>
                       <MenuItem value={'distance'}>Distance</MenuItem>
                     </Select>

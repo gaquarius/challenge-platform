@@ -1,5 +1,4 @@
 import { useEffect, useState, useCallback } from 'react'
-import PropTypes from 'prop-types'
 import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
 import {
@@ -29,8 +28,8 @@ import {
   updateChallenge,
 } from 'services/challenge'
 import { toast } from 'react-toastify'
-import { getUser } from 'services/user'
-import { stringDate } from 'utils/date'
+import { useAppState } from '../../context/stateContext'
+import { convertDateToUTCString } from 'utils/date'
 
 export const CREATE_MODE = 0
 export const EDIT_MODE = 1
@@ -67,8 +66,8 @@ const defaultValues = {
   goal: 'count',
   goal_threshold: 0,
   goal_increments: 1,
-  start_date: stringDate(new Date()),
-  end_date: stringDate(new Date()),
+  start_date: new Date(),
+  end_date: new Date(),
   status: 'open',
   visible: true,
 }
@@ -77,31 +76,17 @@ const EditChallenge = () => {
   const history = useHistory()
   const styles = useStyles()
   const { id } = useParams()
-  const { mutate: mutateGetUser } = useMutation(getUser)
   const { mutate: mutateGetChallenge } = useMutation(getChallenge)
   const { mutate: mutateCreateChallenge } = useMutation(createChallenge)
   const { mutate: mutateUpdateChallenge } = useMutation(updateChallenge)
 
-  const [user, setUser] = useState({})
+  const { currentUser, useFetchUser } = useAppState()
   const [mode, setMode] = useState()
   const [initialValues, setInitialValues] = useState(defaultValues)
   const [loading, setLoading] = useState(true)
   const [disable, setDisable] = useState(false)
 
-  useEffect(() => {
-    mutateGetUser(
-      {},
-      {
-        onSuccess: ({ data }) => {
-          setUser(data.data)
-          setLoading(false)
-        },
-        onError: () => {
-          toast.error(`Can't get profile data`)
-        },
-      }
-    )
-  }, [mutateGetUser])
+  useFetchUser()
 
   useEffect(() => {
     if (id) {
@@ -124,11 +109,14 @@ const EditChallenge = () => {
   const handleSubmit = useCallback(
     (values) => {
       setDisable(true)
+
       const data = {
         ...values,
-        coordinator: user.username,
-        start_date: stringDate(values.start_date),
-        end_date: stringDate(values.end_date),
+        coordinator: currentUser.username,
+        start_date: convertDateToUTCString(values.start_date),
+        end_date: convertDateToUTCString(values.end_date),
+        goal_threshold: `${values.goal_threshold}`,
+        goal_increments: `${values.goal_increments}`,
       }
       if (mode === CREATE_MODE) {
         mutateCreateChallenge(data, {
@@ -158,7 +146,7 @@ const EditChallenge = () => {
       }
     },
     [
-      user.username,
+      currentUser,
       mode,
       mutateCreateChallenge,
       history,
@@ -370,7 +358,6 @@ const EditChallenge = () => {
                             error={Boolean(
                               touched.start_date && errors.start_date
                             )}
-                            helperText={touched.start_date && errors.start_date}
                             value={values.start_date}
                             onChange={(date) =>
                               setFieldValue('start_date', date)
@@ -406,7 +393,6 @@ const EditChallenge = () => {
                             }}
                             name='end_date'
                             error={Boolean(touched.end_date && errors.end_date)}
-                            helperText={touched.end_date && errors.end_date}
                             value={values.end_date}
                             onChange={(date) => setFieldValue('end_date', date)}
                           />
@@ -527,8 +513,4 @@ const EditChallenge = () => {
   )
 }
 
-EditChallenge.propTypes = {
-  data: PropTypes.any,
-  mode: PropTypes.number,
-}
 export default EditChallenge

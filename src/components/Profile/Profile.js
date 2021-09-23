@@ -3,7 +3,7 @@ import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
 import Container from '@material-ui/core/Container'
 import { makeStyles } from '@material-ui/core/styles'
-import { getUser, updateUser } from 'services/user'
+import { updateUser } from 'services/user'
 import PageWrapper from 'components/common/PageWrapper/PageWrapper'
 import {
   Avatar,
@@ -14,6 +14,7 @@ import {
   TextField,
 } from '@material-ui/core'
 import { getAvatarString } from 'utils'
+import { useAppState } from '../../context/stateContext'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -40,25 +41,19 @@ const useStyles = makeStyles((theme) => ({
 
 const Profile = () => {
   const styles = useStyles()
-  const { mutate: mutateGetUser } = useMutation(getUser)
   const { mutate: mutateUpdateUser } = useMutation(updateUser)
-  const [loading, setLoading] = useState(true)
+  const { currentUser, useFetchUser } = useAppState()
   const [user, setUser] = useState({})
+  const [loading, setLoading] = useState(true)
+
+  useFetchUser()
 
   React.useEffect(() => {
-    mutateGetUser(
-      {},
-      {
-        onSuccess: ({ data }) => {
-          setUser(data.data)
-          setLoading(false)
-        },
-        onError: () => {
-          toast.error(`Can't get profile data`)
-        },
-      }
-    )
-  }, [mutateGetUser])
+    if (currentUser) {
+      setLoading(false)
+      setUser(currentUser)
+    }
+  }, [currentUser])
 
   const onSave = React.useCallback(() => {
     mutateUpdateUser(user, {
