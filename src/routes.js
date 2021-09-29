@@ -21,6 +21,9 @@ const Routes = {
     path: '/challenge/create',
   },
   EditChallenge: {
+    path: '/challenge/:id/edit',
+  },
+  ChallengeDetail: {
     path: '/challenge/:id',
   },
 }

@@ -23,4 +23,8 @@ export const updateChallenge = (payload) => {
   return axios.put(`${API_URL}/${payload.id}`, payload.data)
 }
 
+export const joinChallenge = (payload) => {
+  return axios.post(`${API_URL}/join/`, payload)
+}
+
 interceptors(axios)

@@ -17,6 +17,7 @@ import Routes from 'routes'
 import ChallengeList from 'components/Challenge/ChallengeList'
 import EditChallenge from 'components/Challenge/EditChallenge'
 import AppStateProvider from './context/stateContext'
+import ChallengeDetail from 'components/Challenge/ChallengeDetail'
 
 const theme = createTheme({
   palette: {
@@ -68,6 +69,11 @@ const App = () => {
                     path={Routes.EditChallenge.path}
                     exact
                     component={EditChallenge}
+                  />
+                  <ProtectedRoute
+                    path={Routes.ChallengeDetail.path}
+                    exact
+                    component={ChallengeDetail}
                   />
                   <ProtectedRoute
                     path={Routes.ProfileById.path}
