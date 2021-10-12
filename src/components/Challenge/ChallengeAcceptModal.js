@@ -7,13 +7,19 @@ import {
   DialogTitle,
 } from '@material-ui/core'
 import PropTypes from 'prop-types'
+import { useCallback } from 'react'
 
 export default function ChallengeAcceptModal(props) {
-  const { open, setOpen } = props
+  const { open, setOpen, onAgree } = props
 
   const handleClose = () => {
     setOpen(false)
   }
+
+  const handleAgree = useCallback(() => {
+    onAgree()
+    setOpen(false)
+  }, [onAgree, setOpen])
 
   return (
     <Dialog
@@ -38,10 +44,10 @@ export default function ChallengeAcceptModal(props) {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color='primary'>
+        <Button onClick={handleClose} color='secondary'>
           Disagree
         </Button>
-        <Button onClick={handleClose} color='primary' autoFocus>
+        <Button onClick={handleAgree} color='primary' autoFocus>
           Agree
         </Button>
       </DialogActions>
@@ -52,4 +58,5 @@ export default function ChallengeAcceptModal(props) {
 ChallengeAcceptModal.propTypes = {
   open: PropTypes.bool,
   setOpen: PropTypes.func,
+  onAgree: PropTypes.func,
 }
