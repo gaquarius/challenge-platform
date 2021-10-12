@@ -142,7 +142,7 @@ export default function ChallengeDetail() {
         },
       }
     )
-  }, [currentUser.username, id, mutateJoinChallenge])
+  }, [currentUser, id, mutateJoinChallenge])
 
   const reload = useCallback(() => {
     if (id) {
