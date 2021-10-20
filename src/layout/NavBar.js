@@ -56,6 +56,11 @@ const NavBar = () => {
     handleClose()
   }, [history, handleClose])
 
+  const handleLogin = React.useCallback(() => {
+    history.push('/login')
+    handleClose()
+  }, [history, handleClose])
+
   const onChallenges = React.useCallback(() => {
     history.push('/challenges')
   }, [history])
@@ -67,7 +72,7 @@ const NavBar = () => {
           <Typography variant='h6' className={classes.title}>
             Goal/Challenge Platform
           </Typography>
-          {auth && (
+          {auth ? (
             <Box display='flex' flexDirection='row' alignItems='center'>
               <Typography
                 variant='h6'
@@ -103,6 +108,16 @@ const NavBar = () => {
                 <MenuItem onClick={handleProfile}>Profile</MenuItem>
                 <MenuItem onClick={handleLogout}>Log out</MenuItem>
               </Menu>
+            </Box>
+          ) : (
+            <Box display='flex' flexDirection='row' alignItems='center'>
+              <Typography
+                variant='h6'
+                className={classes.title}
+                onClick={handleLogin}
+              >
+                Login
+              </Typography>
             </Box>
           )}
         </Toolbar>

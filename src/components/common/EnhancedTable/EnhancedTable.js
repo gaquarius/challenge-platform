@@ -11,6 +11,8 @@ import Paper from '@material-ui/core/Paper'
 import Chip from '@material-ui/core/Chip'
 import EnhancedTableToolbar from './EnhancedTableToolbar'
 import EnhancedTableHead from './EnhancedTableHead'
+import { Box, IconButton } from '@material-ui/core'
+import { Edit } from '@material-ui/icons'
 
 const SHOW_ALL = 'All'
 
@@ -51,6 +53,9 @@ const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 750,
   },
+  tableRow: {
+    cursor: 'pointer',
+  },
   visuallyHidden: {
     border: 0,
     clip: 'rect(0 0 0 0)',
@@ -65,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function EnhancedTable(props) {
-  const { data, onFilter, users } = props
+  const { data, onFilter, users, onOpen, onEdit, currentUser } = props
 
   const classes = useStyles()
   const [order, setOrder] = React.useState('asc')
@@ -128,6 +133,8 @@ export default function EnhancedTable(props) {
                       role='checkbox'
                       tabIndex={-1}
                       key={`table-data-${index}`}
+                      onClick={() => onOpen(row._id)}
+                      className={classes.tableRow}
                     >
                       <TableCell align='center'>{index + 1}</TableCell>
                       <TableCell
@@ -139,7 +146,12 @@ export default function EnhancedTable(props) {
                         {row.name}
                       </TableCell>
                       <TableCell align='center'>
-                        <Chip label={row.status} color='secondary' />
+                        <Chip
+                          label={row.status}
+                          color={
+                            row.status === 'open' ? 'primary' : 'secondary'
+                          }
+                        />
                       </TableCell>
                       <TableCell align='center'>{row.start_date}</TableCell>
                       <TableCell align='center'>{row.end_date}</TableCell>
@@ -151,6 +163,24 @@ export default function EnhancedTable(props) {
                             __html: row.content,
                           }}
                         />
+                      </TableCell>
+                      <TableCell align='left'>
+                        {currentUser &&
+                          currentUser.username === row.coordinator &&
+                          new Date(row.start_date) > new Date() && (
+                            <Box display='flex'>
+                              <IconButton
+                                aria-label='detail'
+                                onClick={(event) => {
+                                  event.preventDefault()
+                                  event.stopPropagation()
+                                  onEdit(row._id)
+                                }}
+                              >
+                                <Edit />
+                              </IconButton>
+                            </Box>
+                          )}
                       </TableCell>
                     </TableRow>
                   )
@@ -181,4 +211,7 @@ EnhancedTable.propTypes = {
   data: PropTypes.array,
   onFilter: PropTypes.func,
   users: PropTypes.arrayOf(PropTypes.string),
+  onOpen: PropTypes.func,
+  onEdit: PropTypes.func,
+  currentUser: PropTypes.any,
 }

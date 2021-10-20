@@ -17,6 +17,15 @@ const Routes = {
   Challenges: {
     path: '/challenges',
   },
+  CreateChallenge: {
+    path: '/challenge/create',
+  },
+  EditChallenge: {
+    path: '/challenge/:id/edit',
+  },
+  ChallengeDetail: {
+    path: '/challenge/:id',
+  },
 }
 
 export default Routes

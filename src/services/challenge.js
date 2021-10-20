@@ -7,8 +7,24 @@ export const getChallenges = () => {
   return axios.get(`${API_URL}/`)
 }
 
-export const getChallengesByUser = (payload) => {
-  return axios.get(`${API_URL}/${payload}`)
+export const getChallengesByUser = (userId) => {
+  return axios.get(`${API_URL}/user/${userId}`)
+}
+
+export const getChallenge = (id) => {
+  return axios.get(`${API_URL}/${id}`)
+}
+
+export const createChallenge = (payload) => {
+  return axios.post(`${API_URL}/`, payload)
+}
+
+export const updateChallenge = (payload) => {
+  return axios.put(`${API_URL}/${payload.id}`, payload.data)
+}
+
+export const joinChallenge = (payload) => {
+  return axios.post(`${API_URL}/${payload.id}/join/`, payload.data)
 }
 
 interceptors(axios)

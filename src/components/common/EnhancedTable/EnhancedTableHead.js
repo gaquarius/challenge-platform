@@ -27,6 +27,7 @@ const headCells = [
     sortable: false,
   },
   { id: 'content', disablePadding: false, label: 'Content', sortable: false },
+  { id: 'action', disablePadding: false, label: 'Action', sortable: false },
 ]
 
 function EnhancedTableHead(props) {

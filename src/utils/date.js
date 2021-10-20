@@ -1,4 +1,4 @@
-export const utcDate = (date) => {
+export const convertFromUTC = (date) => {
   const split = date.split('-')
 
   if (split.length !== 3) return null
@@ -10,7 +10,9 @@ export const utcDate = (date) => {
   return new Date(Date.UTC(year, month, day))
 }
 
-export const utcNow = () => {
-  const now = new Date()
-  return new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
+export const convertDateToUTCString = (date) => {
+  const newDate = new Date(date)
+  return `${newDate.getUTCFullYear()}-${
+    newDate.getUTCMonth() + 1
+  }-${newDate.getUTCDate()}`
 }

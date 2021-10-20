@@ -15,7 +15,7 @@ import {
   Paper,
 } from '@material-ui/core'
 import ImageIcon from '@material-ui/icons/Image'
-import { utcDate, utcNow } from 'utils/date'
+import { convertFromUTC } from 'utils/date'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props
@@ -72,13 +72,13 @@ export default function ChallengeView(props) {
 
   const previousChallenges = useMemo(() => {
     return challenges.filter(
-      (challenge) => utcDate(challenge.start_date) <= utcNow()
+      (challenge) => convertFromUTC(challenge.start_date) <= new Date()
     )
   }, [challenges])
 
   const upcomingChallenges = useMemo(() => {
     return challenges.filter(
-      (challenge) => utcDate(challenge.start_date) > utcNow()
+      (challenge) => convertFromUTC(challenge.start_date) > new Date()
     )
   }, [challenges])
 
