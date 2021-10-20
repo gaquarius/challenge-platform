@@ -53,20 +53,8 @@ export default function ChallengeDetail() {
   useFetchUser()
 
   useEffect(() => {
-    if (id) {
-      mutateGetChallenge(id, {
-        onSuccess: ({ data }) => {
-          setChallenge(data.data)
-          setLoading(false)
-        },
-        onError: () => {
-          toast.error(`Can't get challenge.`)
-        },
-      })
-    } else {
-      setLoading(false)
-    }
-  }, [id, setLoading, mutateGetChallenge])
+    reload()
+  }, [reload])
 
   useEffect(() => {
     const timerId = setInterval(() => {
@@ -137,8 +125,14 @@ export default function ChallengeDetail() {
   }, [])
 
   const handleAgree = useCallback(() => {
+    setLoading(true)
     mutateJoinChallenge(
-      {},
+      {
+        id,
+        data: {
+          username: currentUser.username,
+        },
+      },
       {
         onSuccess: () => {
           setLoading(false)
@@ -148,7 +142,23 @@ export default function ChallengeDetail() {
         },
       }
     )
-  }, [mutateJoinChallenge])
+  }, [currentUser, id, mutateJoinChallenge])
+
+  const reload = useCallback(() => {
+    if (id) {
+      mutateGetChallenge(id, {
+        onSuccess: ({ data }) => {
+          setChallenge(data.data)
+          setLoading(false)
+        },
+        onError: () => {
+          toast.error(`Can't get challenge.`)
+        },
+      })
+    } else {
+      setLoading(false)
+    }
+  }, [id, setLoading, mutateGetChallenge])
 
   return (
     <Container maxWidth='md' className={classes.container}>
